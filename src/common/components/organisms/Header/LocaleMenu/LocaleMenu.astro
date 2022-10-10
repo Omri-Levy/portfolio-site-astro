@@ -86,6 +86,7 @@ const dir = getDir(i18next.language as ELocale);
 	toggleDropdownClasses(localeMenuContainer);
 	window.addEventListener(
 		`keydown`,
-		handleMenuArrowNavigation(localeMenuContainer)
+		handleMenuArrowNavigation(localeMenuContainer),
+		false
 	);
 </script>

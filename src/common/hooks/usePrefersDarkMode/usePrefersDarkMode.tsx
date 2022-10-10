@@ -11,13 +11,13 @@ export const usePrefersDarkMode = () => {
 
 		window
 			.matchMedia(`(prefers-color-scheme: dark)`)
-			.addEventListener(`change`, listener);
+			.addEventListener(`change`, listener, false);
 	});
 
 	onCleanup(() => {
 		window
 			.matchMedia(`(prefers-color-scheme: dark)`)
-			.removeEventListener(`change`, listener);
+			.removeEventListener(`change`, listener, false);
 	});
 
 	return prefersDarkMode;

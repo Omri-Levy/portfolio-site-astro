@@ -13,5 +13,5 @@ const handleLocale = (locale: ELocale) => () => {
 const enBtn = document.getElementById(`en-locale`);
 const heBtn = document.getElementById(`he-locale`);
 
-enBtn?.addEventListener(`click`, handleLocale(ELocale.EN));
-heBtn?.addEventListener(`click`, handleLocale(ELocale.HE));
+enBtn?.addEventListener(`click`, handleLocale(ELocale.EN)), false;
+heBtn?.addEventListener(`click`, handleLocale(ELocale.HE), false);

@@ -11,11 +11,11 @@ export const useMediaQuery = (mediaQuery: string) => {
 	};
 
 	onMount(() => {
-		window.matchMedia(mediaQuery).addEventListener(`change`, listener);
+		window.matchMedia(mediaQuery).addEventListener(`change`, listener, false);
 	});
 
 	onCleanup(() => {
-		window.matchMedia(mediaQuery).removeEventListener(`change`, listener);
+		window.matchMedia(mediaQuery).removeEventListener(`change`, listener, false);
 	});
 
 	return matches;

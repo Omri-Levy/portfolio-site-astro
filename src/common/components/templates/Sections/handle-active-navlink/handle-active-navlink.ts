@@ -68,9 +68,17 @@ const createSectionScrollObserver = () => {
 	);
 };
 
-const sections = getSections();
-const observer = createSectionScrollObserver();
+window.addEventListener(
+	`load`,
+	() => {
+		if (!(`IntersectionObserver` in window)) return;
 
-sections.forEach((section) => {
-	observer.observe(section);
-});
+		const observer = createSectionScrollObserver();
+		const sections = getSections();
+
+		sections.forEach((section) => {
+			observer.observe(section);
+		});
+	},
+	false
+);
