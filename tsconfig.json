@@ -1,0 +1,39 @@
+{
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"jsx": "preserve",
+		"jsxImportSource": "solid-js",
+		"incremental": true,
+		"baseUrl": ".",
+		"target": "ES2019",
+		"module": "ESNext",
+		"paths": {
+			// Directories
+			"@pages/hero/*": ["src/hero/*"],
+			"@pages/about-me/*": ["src/about-me/*"],
+			"@pages/portfolio/*": ["src/portfolio/*"],
+			"@pages/contact-me/*": ["src/contact-me/*"],
+			"@components/*": ["src/common/components/*"],
+			"@utils/*": ["src/common/utils/*"],
+			"@hooks/*": ["src/common/hooks/*"],
+			"@directives/*": ["src/common/directives/*"],
+			"@common/*": ["src/common/*"],
+			// Files
+			"@interfaces": ["src/common/interfaces"],
+			"@types": ["src/common/types"],
+			"@enums": ["src/common/enums"]
+		},
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noUncheckedIndexedAccess": true,
+		//   "exactOptionalPropertyTypes": true,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"lib": ["dom", "dom.iterable", "esnext"]
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules"]
+}

@@ -1,0 +1,24 @@
+---
+import i18next, { changeLanguage } from 'i18next';
+import { fetchInfo } from '@utils/fetch-info/fetch-info';
+import { getPages } from '@utils/get-pages/get-pages';
+
+import '@common/styles/globals.css';
+import { pagesToNavLinks } from '@components/organisms/Header/NavBar/utils/pages-to-nav-links/pages-to-nav-links';
+import Layout from '@components/templates/Layout/Layout.astro';
+import Sections from '@components/templates/Sections/Sections.astro';
+
+const { pages, hero, aboutMe, portfolio, contactMe } = await getPages();
+const info = await fetchInfo();
+const heroWithId = {
+	...hero,
+	id: `hero`,
+};
+const navLinks = pagesToNavLinks(pages?.filter((page) => page?.url));
+
+changeLanguage(`he`);
+---
+
+<Layout navLinks={navLinks}>
+	<Sections hero={heroWithId} {aboutMe} {portfolio} {contactMe} {info} />
+</Layout>

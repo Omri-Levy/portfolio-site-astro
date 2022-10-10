@@ -1,0 +1,23 @@
+---
+import type { ILinkProps } from './interfaces';
+
+export type Props = ILinkProps;
+const { href, class: classes } = Astro.props;
+---
+
+<a
+	href={href}
+	class={`
+			focus-visible:ring-gradient-1
+			rounded-md
+			p-1
+			underline
+			decoration-primary
+			decoration-2
+			hover:decoration-[3px]
+			focus:outline-none
+			${classes ?? ``}
+`}
+>
+	<slot />
+</a>

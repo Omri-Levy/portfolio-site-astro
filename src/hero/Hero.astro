@@ -1,0 +1,93 @@
+---
+import PWithBr from '@components/atoms/PWithBr/PWithBr.astro';
+import Container from '@components/templates/Section/Container/Container.astro';
+import Section from '@components/templates/Section/Section.astro';
+import Title from '@components/templates/Section/Title/Title.astro';
+import CallsToAction from '@pages/hero/components/molecules/CallsToAction/CallsToAction.astro';
+import i18next, { t } from 'i18next';
+import type { IHeroProps } from './interfaces';
+import {imgix} from '@common/lib/imgix-client';
+
+export type Props = IHeroProps;
+
+const {
+	id = `hero`,
+	page: { heading, callToAction, background } = {},
+	cvUrl,
+} = Astro.props;
+const lang = i18next.language as `en` | `he`;
+const srcset = imgix.buildSrcSet(
+	background,
+	{
+		fit: `max`,
+		auto: `format`,
+	},
+	{
+		widths: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+		formats: [`avif`, `webp`],
+	}
+);
+---
+
+<Section id={id} class={`relative`}>
+	{
+		background && (
+			<img
+				slot={`background`}
+				alt={`hero-background`}
+				{srcset}
+				class={`
+					absolute
+					-z-10
+					min-h-full
+	`}
+			/>
+		)
+	}
+	<!-- Allows
+			an
+			h1
+			for
+			screen
+			readers
+			while
+			still
+			applying
+			a
+			consistent
+			margin
+			from
+			the
+			section title
+			(sr-only
+			is
+			position
+			absolute
+			by
+			default) -->
+	<Title slot="title" class={`sr-only static`}>
+		{t(`landingPage`)}
+	</Title>
+	<Container
+		slot="container"
+		class={`
+		relative
+			w-full
+			max-w-[1280px]
+			`}
+	>
+		<h2
+			class={`
+					mb-12
+					text-6xl
+					font-bold
+					xs:text-7xl
+					sm:text-8xl
+					md:text-9xl
+					`}
+		>
+			<PWithBr blocks={heading?.[lang]} />
+		</h2>
+		<CallsToAction cvUrl={cvUrl} callToAction={callToAction} />
+	</Container>
+</Section>

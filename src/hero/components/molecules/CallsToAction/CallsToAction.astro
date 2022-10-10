@@ -1,0 +1,129 @@
+---
+import i18next, { t } from 'i18next';
+
+const { callToAction, cvUrl, ...rest } = Astro.props;
+---
+
+<div
+	class={`
+			flex
+			justify-end
+			space-s-4
+		`}
+>
+	{/* Open CV */}
+	<a
+		href={cvUrl}
+		target={`_blank`}
+		rel={`noreferrer`}
+		class={`
+					relative
+					w-44
+					overflow-hidden
+					rounded-xl
+					border-2
+					border-base-content
+					p-3
+					text-center
+					font-bold
+					uppercase
+					tracking-widest
+					transition-all
+					duration-300
+					ease-out
+					hover:bg-gradient-to-r
+					focus:outline-none
+					focus:ring-2
+					focus:ring-base-content/50
+					focus:ring-offset-2
+					sm:w-48
+					sm:p-4
+				`}
+	>
+		<span
+			class={`
+				ease
+				absolute
+				right-0
+				-mt-12
+				h-32
+				w-8
+				translate-x-12
+				rotate-12
+				transform
+				bg-gray-50
+				opacity-10
+				transition-all
+				duration-1000
+				group-hover:-translate-x-40
+				`} />
+		<span
+			class={`
+				relative
+				text-sm
+				sm:text-lg
+				`}
+		>
+			{t(`cv`)}
+		</span>
+	</a>
+
+	{/* Navigate to page */}
+	<a
+		class={`
+				group
+				relative
+				w-44
+				overflow-hidden
+				rounded-xl
+				bg-gradient-to-r
+				from-primary
+				to-secondary
+				p-3
+				text-center
+				font-bold
+				uppercase
+				tracking-widest
+				transition-all
+				duration-300
+				ease-out
+				focus:outline-none
+				focus:ring-2
+				focus:ring-primary
+				focus:ring-offset-2
+				focus:ring-offset-secondary
+				sm:w-48
+				sm:p-4
+				 `}
+		href={callToAction?.url ?? ``}
+		{...rest}
+	>
+		<span
+			class={`
+							ease
+							group
+							absolute
+							right-0
+							-mt-12
+							h-32
+							w-8
+							translate-x-12
+							rotate-12
+							transform
+							bg-gray-50
+							opacity-10
+							transition-all
+							duration-1000
+							group-hover:-translate-x-40
+							`} />
+		<span
+			class={`
+					relative
+					text-sm
+					sm:text-lg
+					`}
+		>
+			{callToAction?.text?.[i18next.language]}
+		</span>
+	</a>
+</div>

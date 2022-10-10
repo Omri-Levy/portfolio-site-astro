@@ -1,0 +1,96 @@
+---
+// eslint-disable-next-line import/no-unresolved
+import { PortableText } from 'astro-portabletext';
+import type { PortableTextComponents } from 'astro-portabletext/types';
+import i18next from 'i18next';
+import P from '@components/atoms/P/P.astro';
+import Container from '@components/templates/Section/Container/Container.astro';
+import Section from '@components/templates/Section/Section.astro';
+import Title from '@components/templates/Section/Title/Title.astro';
+import type { IAboutMeProps } from './interfaces';
+import { imgix } from '@common/lib/imgix-client';
+
+export type Props = IAboutMeProps;
+const { page: { title, id, body, subtitle, photo } = {} } = Astro.props;
+const profilePicDimensions = 240;
+const lang = i18next.language as `en` | `he`;
+const portableTextComponents: Partial<PortableTextComponents> = {
+	type: {
+		text: P,
+	},
+};
+const srcset = imgix.buildSrcSet(
+	photo?.path,
+	{
+		fit: `max`,
+		auto: `format`,
+	},
+	{
+		widths: [256, 640],
+		formats: [`avif`, `webp`],
+	}
+);
+---
+
+<Section id={id}>
+	<Title slot="title">{title?.[lang]}</Title>
+	<Container
+		slot="container"
+		class={`
+							justify-center
+							gap-16
+							md:grid-cols-[1fr_auto]
+							md:justify-between
+							md:gap-32
+			`}
+	>
+		{/* Bio */}
+		<div
+			class={`
+						order-2
+						max-w-[40ch]
+						text-center
+						md:order-1
+						md:max-w-[60ch]
+						md:text-left
+						rtl:md:text-right
+				`}
+		>
+			<h2
+				class={`
+						mb-4
+						text-center
+						text-3xl
+						sm:text-6xl
+						md:text-left
+						rtl:md:text-right
+					`}
+			>
+				{subtitle?.[lang]}
+			</h2>
+			<PortableText
+				value={body?.[lang]}
+				components={portableTextComponents}
+			/>
+		</div>
+		{/* Profile picture */}
+		<div
+			class={`
+					avatar
+					order-1
+					mx-auto
+					md:order-2
+				`}
+		>
+			<div
+				class={`
+					ring-gradient-1
+					w-60 
+					rounded-full
+					`}
+			>
+				{photo?.path && <img alt={photo?.alt} {srcset} />}
+			</div>
+		</div>
+	</Container>
+</Section>

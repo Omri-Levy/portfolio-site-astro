@@ -1,0 +1,52 @@
+---
+import AboutMe from '@pages/about-me/AboutMe.astro';
+import ContactMe from '@pages/contact-me/ContactMe.astro';
+import Hero from '@pages/hero/Hero.astro';
+import Portfolio from '@pages/portfolio/Portfolio.astro';
+
+const { hero, aboutMe, portfolio, info, contactMe } = Astro.props;
+const pages = [
+	{
+		id: hero?.id,
+		order: 0,
+		page: hero,
+		props: {
+			cvUrl: info?.cvUrl,
+		},
+		Component: Hero,
+	},
+	{
+		id: aboutMe.id,
+		order: aboutMe.order,
+		page: aboutMe,
+		Component: AboutMe,
+	},
+	{
+		id: portfolio.id,
+		order: portfolio.order,
+		page: portfolio,
+		Component: Portfolio,
+	},
+	{
+		id: contactMe.id,
+		order: contactMe.order,
+		page: contactMe,
+		props: {
+			info,
+		},
+		Component: ContactMe,
+	},
+]
+	// In sync with the nav links order.
+	.sort((a, b) => a?.order - b?.order);
+---
+
+{
+	// eslint-disable-next-line
+	pages?.map(({ Component, id, page, props }) => (
+		<Component {id} {page} {...props} />
+	))
+}
+<script lang="ts" hoist>
+	import './handle-active-navlink/handle-active-navlink';
+</script>

@@ -1,0 +1,14 @@
+---
+const { class: classes, ...rest } = Astro.props;
+---
+
+<div
+	class={`
+			grid
+			grid-cols-1
+			content-start
+			 ${classes ?? ``}`}
+	{...rest}
+>
+	<slot />
+</div>

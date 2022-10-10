@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+/* stylelint-disable-next-line selector-id-pattern */
+#__next {
+	@apply min-h-screen;
+}
+
+/* Chrome */
+*::-webkit-scrollbar {
+	@apply w-2.5;
+}
+
+*::-webkit-scrollbar-track {
+	@apply bg-neutral;
+}
+
+*::-webkit-scrollbar-thumb {
+	@apply rounded-full
+	bg-gradient-to-r
+	from-primary
+	to-secondary;
+}
+
+/* Firefox */
+html {
+	scrollbar-color: theme('colors.primary') theme('colors.neutral');
+}
+
+@layer utilities {
+	.ring-gradient-1 {
+		@apply ring-1
+		ring-primary
+		ring-offset-1
+		ring-offset-secondary;
+	}
+
+	.ring-gradient-2 {
+		@apply ring-2
+		ring-primary
+		ring-offset-2
+		ring-offset-secondary;
+	}
+
+	/**
+	* DaisyUI requires using the btn class for the loading class to work.
+	* This ensures I can use the minimum amount of CSS required for a spinner for 
+	* the send button of the contact form.
+	 */
+	.btn-link-secondary.loading-btn {
+		@apply pointer-events-none
+		grid
+		place-content-center
+		opacity-30
+		before:animate-spin
+		before:rounded-full
+		before:border-2
+		before:border-t-transparent
+		before:border-r-transparent
+		before:border-b-current
+		before:border-l-current
+		before:content-[""]
+		before:me-2
+		before:d-5
+		hover:pointer-events-none;
+	}
+
+	.underline-div {
+		@apply w-10
+		transition-all
+		duration-300
+		ease-in;
+	}
+}
+
+@layer components {
+	.btn-link-primary {
+		@apply rounded-xl
+		border-2
+		border-secondary
+		bg-secondary
+		p-3
+		font-bold
+		uppercase
+		tracking-widest
+		text-slate-900
+		hover:animate-pulse
+		focus:animate-pulse
+		focus:outline-none;
+	}
+
+	.btn-link-secondary {
+		@apply rounded-xl
+		border-2
+		border-base-content
+		p-3
+		font-bold
+		uppercase
+		tracking-widest
+		hover:animate-pulse
+		focus:animate-pulse
+		focus:outline-none;
+	}
+}

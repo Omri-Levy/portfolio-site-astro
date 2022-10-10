@@ -1,0 +1,64 @@
+---
+import type { IProjectProps } from '@pages/Portfolio/interfaces';
+import { PortableText } from 'astro-portabletext';
+import type { PortableTextComponents } from 'astro-portabletext/types';
+import i18next, { t } from 'i18next';
+import P from '@components/atoms/P/P.astro';
+
+type PickedProps = Pick<
+	IProjectProps,
+	`title` | `description` | `liveUrl` | `githubUrl`
+>;
+
+export type Props = PickedProps;
+const { title, description, liveUrl, githubUrl } = Astro.props;
+const lang = i18next.language as `en` | `he`;
+const portableTextComponents: Partial<PortableTextComponents> = {
+	type: {
+		text: P,
+	},
+};
+---
+
+<div
+	class={`
+			card-body
+			pb-4
+			`}
+>
+	<h2 class={`card-title`}>{title?.[lang]}</h2>
+	<PortableText
+		{/* @ts-ignore */}
+		value={description?.[lang]}
+		components={portableTextComponents}
+	/>
+	<div
+		class={`
+				card-actions
+				mt-1
+				justify-end
+				space-s-4
+				`}
+	>
+		<!-- Preparing for projects that either don't have one of the urls or that it can't/shouldn't be shared. -->
+		{
+			liveUrl && (
+				<a href={liveUrl} class={`btn-link-primary`} target={`_blank`}>
+					{t(`liveSite`)}
+				</a>
+			)
+		}
+		{
+			githubUrl && (
+				<a
+					target={`_blank`}
+					href={githubUrl}
+					class={`btn-link-secondary`}
+					rel={`noreferrer`}
+				>
+					{t(`github`)}
+				</a>
+			)
+		}
+	</div>
+</div>

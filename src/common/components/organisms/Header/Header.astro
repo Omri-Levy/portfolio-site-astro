@@ -1,0 +1,78 @@
+---
+import { ELocale, EResolvedTheme, ETheme } from '@enums';
+import i18next, { t } from 'i18next';
+import { getDir } from '@utils/get-dir/get-dir';
+import { DarkModeMenu } from './DarkModeMenu/DarkModeMenu';
+import LocaleMenu from './LocaleMenu/LocaleMenu.astro';
+import Logo from './Logo/Logo.astro';
+import NavBar from './NavBar/NavBar.astro';
+import ThemeToggle from './ThemeToggle/ThemeToggle';
+
+const { navLinks } = Astro.props;
+const labels: Record<EResolvedTheme, string> = {
+	[ETheme.SYSTEM]: t(ETheme.SYSTEM),
+	[ETheme.LIGHT]: t(ETheme.LIGHT),
+	[ETheme.DARK]: t(ETheme.DARK),
+};
+---
+
+<header
+	dir={`ltr`}
+	class={`
+	md:w-unset
+	fixed
+	bottom-0
+	z-10
+					flex
+		items-center
+		border-b
+		border-base-100/10
+		bg-base-100/95
+		shadow-md
+		xxs:w-full
+		md:top-0
+		md:bottom-[initial]
+		`}
+>
+	<div
+		class={`
+	mx-auto
+	flex
+	min-h-[4rem]
+	items-center
+	px-4
+	md:container
+	`}
+	>
+		<Logo />
+		<div
+			class={`
+	flex
+	items-center
+	md:ms-auto
+	`}
+		>
+			<NavBar navLinks={navLinks} />
+			<div
+				class={`
+																		mmd:fixed
+																		mmd:top-0
+																		mmd:right-0
+																		mmd:rounded-md
+																		mmd:bg-base-100/95
+																			flex
+																			p-4
+																			space-s-2
+																			`}
+			>
+				<DarkModeMenu
+					client:visible
+					labels={labels}
+					dir={getDir(i18next.language as ELocale)}
+				/>
+				<ThemeToggle client:visible />
+				<LocaleMenu />
+			</div>
+		</div>
+	</div>
+</header>

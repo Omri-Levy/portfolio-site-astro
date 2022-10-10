@@ -1,0 +1,113 @@
+---
+import AstroToSolidBridge from '@common/stores/AstroToSolidBridge/AstroToSolidBridge.astro';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/700.css';
+import i18next from 'i18next';
+import { ELocale, ETheme } from '@enums';
+import { getSEO } from '@utils/get-seo/get-seo';
+import { HeadHrefLangs } from 'astro-i18next/components';
+import { SEO } from 'astro-seo';
+import type { TNavLinks } from '@components/organisms/Header/NavBar/NavLink/types';
+import '@common/styles/globals.css';
+import { handleAltTheme } from '@components/organisms/Header/DarkModeMenu/utils/handle-alt-theme/handle-alt-theme';
+import Header from '@components/organisms/Header/Header.astro';
+import { getDir } from '@utils/get-dir/get-dir';
+
+export interface Props {
+	navLinks: TNavLinks;
+}
+const { description, type, title, url, image } = await getSEO();
+const { navLinks } = Astro.props;
+const dir = getDir(i18next.language as ELocale);
+const seo = {
+	openGraph: {
+		basic: {
+			title,
+			type,
+			url,
+			image,
+		},
+		image: {
+			url: image,
+			width: 1200,
+			height: 630,
+			alt: `Omri Levy portfolio site card image`,
+		},
+		optional: {
+			siteName: title,
+			description,
+			locale: i18next.language,
+			localeAlternate: [`he-IL`],
+		},
+	},
+	twitter: {
+		card: `summary_large_image`,
+	},
+};
+const sitekey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
+---
+
+<!DOCTYPE html>
+<html
+	lang={i18next.language}
+	dir={dir}
+	class={`
+		min-h-screen
+		lg:snap-y
+		scroll-pb-32
+		overflow-y-auto
+		scroll-smooth
+		md:scroll-pb-0
+		lg:snap-proximity
+	`}
+	data-theme={ETheme.SYSTEM}
+>
+	<head>
+		<meta charset="UTF-8" />
+		<script lang="ts" hoist>
+			import { setThemeFromHead } from '../../../stores/theme';
+
+			setThemeFromHead();
+		</script>
+		<script lang="ts" is:inline define:vars={{ i18next, sitekey }}>
+			function onloadCallback() {
+				grecaptcha.render(`g-recaptcha`, {
+					sitekey,
+					theme: localStorage.getItem(`theme`).replace(`-alt`, ``),
+					lang: i18next.language === `he` ? `iw` : i18next.language,
+				});
+			}
+		</script>
+		<script
+			async
+			defer
+			src={`https://www.google.com/recaptcha/api.js?render=explicit&onload=onloadCallback&trustedtypes=true`}
+		></script>
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<SEO description={description} openGraph={seo.openGraph} twitter={} />
+		<HeadHrefLangs />
+	</head>
+	<body class="min-h-screen">
+		<AstroToSolidBridge />
+		<Header {navLinks} />
+		<main
+			class={`
+    			container
+    			mx-auto
+    			min-h-screen
+    			px-4
+    			pb-32
+    			md:pb-0
+				flex 
+				flex-col
+				gap-y-32
+    			`}
+		>
+			<slot />
+		</main>
+		<button tabindex="-1" aria-hidden="true" id={`g-recaptcha`}></button>
+	</body>
+</html>

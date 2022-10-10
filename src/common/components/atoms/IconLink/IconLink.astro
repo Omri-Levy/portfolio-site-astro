@@ -1,0 +1,25 @@
+---
+import type { IIconLinkProps } from './interfaces';
+
+export type Props = IIconLinkProps;
+const { href, class: classes } = Astro.props;
+---
+
+<a
+	target={`__blank`}
+	href={href}
+	class={`
+			hocus-visible:ring-gradient-1
+			p-[2px]
+			focus:outline-none
+								${classes ?? ``}
+								`}
+>
+	<svg
+		xmlns={`http://www.w3.org/2000/svg`}
+		class={`d-8`}
+		viewBox={`0 0 24 24`}
+	>
+		<slot />
+	</svg>
+</a>

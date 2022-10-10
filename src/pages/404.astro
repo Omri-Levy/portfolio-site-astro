@@ -1,0 +1,34 @@
+---
+import i18next, { t } from 'i18next';
+import Link from '@components/atoms/Link/Link.astro';
+import type { TNavLinks } from '@components/organisms/Header/NavBar/NavLink/types';
+import type { ILocaleString } from '../portabletext/interfaces';
+import Container from '@components/templates/Section/Container/Container.astro';
+import Section from '@components/templates/Section/Section.astro';
+import Title from '@components/templates/Section/Title/Title.astro';
+
+export interface NotFoundProps {
+	navLinks: TNavLinks;
+	notFound: {
+		title: ILocaleString;
+		subtitle: ILocaleString;
+	};
+}
+
+const { notFound } = Astro.props;
+---
+
+<Section>
+	<Title slot="title">
+		{notFound?.title[i18next.language]}
+	</Title>
+	<Container slot="container">
+		<p class={`text-4xl`}>
+			{notFound?.subtitle[i18next.language]}
+			{` `}
+			<Link href={`/#`} class={`text-4xl`}>
+				{t(`notFoundLinkText`)}
+			</Link>
+		</p>
+	</Container>
+</Section>

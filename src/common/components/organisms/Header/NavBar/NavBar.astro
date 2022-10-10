@@ -1,0 +1,27 @@
+---
+import { getDir } from '@utils/get-dir/get-dir';
+import i18next from 'i18next';
+import { ResponsiveLinksOrder } from './ResponsiveLinksOrder/ResponsiveLinksOrder';
+import type { TNavLinks } from './NavLink/types';
+import type { ELocale } from '@enums';
+
+export interface Props {
+	navLinks: TNavLinks;
+}
+
+const { navLinks } = Astro.props;
+const locale = i18next.language as ELocale;
+const dir = getDir(locale);
+---
+
+<!-- NavBar is vertical up to 377.6px, otherwise links break to multiple lines. -->
+<nav
+	dir={dir}
+	class={`
+	my-4
+	items-center
+	xs:my-0
+	`}
+>
+	<ResponsiveLinksOrder locale={locale} navLinks={navLinks} client:idle />
+</nav>

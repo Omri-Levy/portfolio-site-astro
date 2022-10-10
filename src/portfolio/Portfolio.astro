@@ -1,0 +1,38 @@
+---
+import i18next from 'i18next';
+import Section from '@components/templates/Section/Section.astro';
+import Title from '@components/templates/Section/Title/Title.astro';
+import Container from '@components/templates/Section/Container/Container.astro';
+import type { IPortfolioProps } from './interfaces';
+import Project from './components/organisms/Project/Project.astro';
+
+export type Props = IPortfolioProps;
+const { page: { id, title, projects } = {} } = Astro.props;
+const lang = i18next.language as `en` | `he`;
+---
+
+<Section id={id}>
+	<Title slot="title">{title?.[lang]}</Title>
+	<Container
+		slot="container"
+		class={`
+		auto-rows-fr
+		grid-cols-1
+		gap-4
+		pb-4 md:grid-cols-2
+		xl:grid-cols-3
+		`}
+	>
+		{
+			projects?.map((props) => (
+				<Project
+					title={props.title}
+					description={props.description}
+					githubUrl={props.githubUrl}
+					liveUrl={props.liveUrl}
+					video={props.video}
+				/>
+			))
+		}
+	</Container>
+</Section>

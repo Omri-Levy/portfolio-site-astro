@@ -1,0 +1,40 @@
+---
+import Card from '@components/molecules/Card/Card.astro';
+import type { IProjectProps } from '../interfaces';
+
+export type Props = IProjectProps;
+const { video, title, description, liveUrl, githubUrl } = Astro.props;
+---
+
+<div
+	class={`
+			card
+			max-w-md
+			border
+			border-base-300
+			bg-base-100
+			shadow-md
+			`}
+>
+	<video
+		muted
+		controls
+		preload={`metadata`}
+		class={`
+				focus-visible:ring-gradient-1
+				aspect-video
+				rounded
+				focus:outline-none
+				`}
+	>
+		<source src={`${video?.url}.webm`} type={`video/webm`} />
+		<source class={`d-full`} src={`${video?.url}.mp4`} type={`video/mp4`} />
+		Your browser does not support the video tag.
+	</video>
+	<Card
+		title={title}
+		description={description}
+		liveUrl={liveUrl}
+		githubUrl={githubUrl}
+	/>
+</div>
