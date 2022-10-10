@@ -29,22 +29,11 @@ const activateNavlink = (hash: string) => {
  * Set the url hash to the id of the intersecting section.
  */
 const handleActiveLink = (entry: IntersectionObserverEntry) => {
-	const navLinks = getNavlinks();
-
-	// Handles page reloads
-	if (!navLinks?.length) {
-		const hash = getHash();
-
-		if (!hash) return;
-
-		activateNavlink(hash);
-
-		return;
-	}
-
 	if (!entry.target.id || !entry.isIntersecting) return;
 
 	// Remove the active class from all nav links
+	const navLinks = getNavlinks();
+
 	navLinks.forEach((link) => {
 		link.classList.remove(`underline-div`);
 	});
